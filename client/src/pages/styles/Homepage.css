@@ -1,0 +1,140 @@
+/* Homepage.css - Styles for Homepage.js */
+
+.homepage-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  /* min-height: 100vh; */
+  padding-bottom: 80px;
+}
+
+.homepage-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color:black;
+}
+
+.transaction-list {
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.add-transaction-btn {
+  display: block;
+  margin: 2rem auto 0 auto;
+  padding: 0.75rem 2rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-transaction-btn:hover {
+  background: #2563eb;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .homepage-container {
+    padding: 1rem;
+  }
+  .homepage-title {
+    font-size: 2rem;
+  }
+  .transaction-list {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .homepage-container {
+    padding: 0.5rem;
+  }
+  .homepage-title {
+    font-size: 1.5rem;
+  }
+  .transaction-list {
+    padding: 0.5rem;
+  }
+  .add-transaction-btn {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.75rem 0;
+  }
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+} 
+.footer {
+  flex-shrink: 0;           /* Prevent shrinking in flex layout */
+  width: 100%;              /* Ensure full width */
+}
+
+/* If you're using flex layout on page-wrapper (recommended): */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Let main content grow and push footer down */
+.homepage-container {
+  flex: 1;
+}
+
+/* Responsive grid for Analytics and other .row/.col-md-4 usage */
+@media (max-width: 900px) {
+  .row {
+    flex-direction: column !important;
+    display: flex !important;
+    gap: 1.5rem;
+  }
+  .col-md-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .homepage-title {
+    font-size: 1.1rem;
+  }
+  .transaction-list, .card {
+    padding: 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .card-header, .card-body, h4, h5 {
+    font-size: 1rem;
+  }
+  .add-transaction-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 0;
+  }
+}
