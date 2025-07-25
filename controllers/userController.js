@@ -1,5 +1,6 @@
 const userModel=require('../models/userModel');
 const bcrypt=require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const loginController=async(req,res)=>{
     try{
@@ -15,9 +16,18 @@ const loginController=async(req,res)=>{
                 message:'Invalid Credentials'
             })
         }
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+        // Exclude password from user object
+        const { password: pwd, ...userWithoutPassword } = user._doc;
         res.status(200).json({
             success:true,
-            user
+            user: userWithoutPassword,
+            token
         });
     }catch(error){
             res.status(400).json({
@@ -41,9 +51,17 @@ const registerController=async(req,res)=>{
         const hashedPassword=await bcrypt.hash(password,salt);
         const newUser=new userModel({name,email,password:hashedPassword})
         await newUser.save()
+        // Generate JWT token for new user
+        const token = jwt.sign(
+            { userId: newUser._id, email: newUser.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+        const { password: pwd, ...userWithoutPassword } = newUser._doc;
         res.status(201).json({
-            sucess:true,
-            newUser,
+            success:true,
+            user: userWithoutPassword,
+            token
         });  
  }
     catch(error){

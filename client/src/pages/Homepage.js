@@ -69,13 +69,16 @@ const Homepage = () => {
        const getAllTransactions=async()=>{
     try{
       const user=JSON.parse(localStorage.getItem('user'))
+      const token = localStorage.getItem('token');
       setloading(true);
-      const res=await axios.post('/transactions/get-transactions',{userid:user._id,frequency,selectedDate,type});
+      const res=await axios.post('/transactions/get-transactions',
+        {userid:user._id,frequency,selectedDate,type},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setloading(false)
       const transactionsWithKeys = res.data.map(transaction => ({
         ...transaction,
         key: transaction._id,
-      
       }));
       setallTransaction(transactionsWithKeys)
     }
@@ -98,7 +101,8 @@ const Homepage = () => {
   const handleDelete=async (record)=>{
     try{
       setloading(true)
-      await axios.post('/transactions/delete-transaction',{transactionId:record._id} )
+      const token = localStorage.getItem('token');
+      await axios.post('/transactions/delete-transaction', {transactionId:record._id}, { headers: { Authorization: `Bearer ${token}` } })
       setloading(false)
       message.success('Tranaction Deleted!')
       await getAllTransactions();
@@ -111,6 +115,7 @@ const Homepage = () => {
   const handleSubmit=async (values)=>{
       try{
         const user=JSON.parse(localStorage.getItem('user'))
+        const token = localStorage.getItem('token');
         setloading(true)
     if (editable) {
      await axios.post('/transactions/edit-transaction', {
@@ -119,14 +124,14 @@ const Homepage = () => {
       userId: user._id
      },
      transactionId: editable._id
-   });
+   }, { headers: { Authorization: `Bearer ${token}` } });
     await getAllTransactions(); 
     setloading(false);
     message.success('Transaction Updated Successfully'); 
 }
 
         else{
-        await axios.post('/transactions/add-transaction',{...values,userid:user._id})
+        await axios.post('/transactions/add-transaction',{...values,userid:user._id}, { headers: { Authorization: `Bearer ${token}` } })
         
         setloading(false)
         message.success('Transaction Added Successfully')
